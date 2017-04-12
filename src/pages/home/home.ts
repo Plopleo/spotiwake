@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AddAlarm } from '../add-alarm/add-alarm';
+import { AddAlarmPage } from '../add-alarm/add-alarm';
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage {
-    addAlarm = AddAlarm;
+    addAlarmPage = AddAlarmPage;
+    alarms = [];
 
-    constructor(public navCtrl:NavController) {
+    constructor(public navCtrl:NavController, storage: Storage) {
 
     }
 

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AddAlarm } from './add-alarm';
+import { AddAlarmPage } from './add-alarm';
 
 @NgModule({
   declarations: [
-    AddAlarm,
+    AddAlarmPage,
   ],
   imports: [
-    IonicPageModule.forChild(AddAlarm),
+    IonicPageModule.forChild(AddAlarmPage),
   ],
   exports: [
-    AddAlarm
+    AddAlarmPage
   ]
 })
 export class AddAlarmModule {}
