@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar color="spotiwake">
+        <ion-title>Search music</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list inset>
+        <ion-item>
+            <ion-label color="spotiwake">Music</ion-label>
+            <ion-input [(ngModel)]="musicSearch" type="text"></ion-input>
+        </ion-item>
+    </ion-list>
+    <div padding>
+        <button ion-button block (click)="getMusic()" color="spotiwake">Search</button>
+    </div>
+    <ion-item *ngFor="let item of foundMusics" (click)="selectMusic( item.preview_url )">
+        <ion-avatar item-left>
+            <img src="{{item.album.images[0].url}}">
+        </ion-avatar>
+        <h2>{{item.name}}</h2>
+        <p>{{item.artists[0].name}}</p>
+    </ion-item>
+</ion-content>

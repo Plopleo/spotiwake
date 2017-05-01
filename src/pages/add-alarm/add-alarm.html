@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color="spotiwake">
-        <ion-title>Add an alarm</ion-title>
+        <ion-title>Set alarm</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -41,7 +41,12 @@
                 <ion-checkbox formControlName="sunday" name="sunday" ></ion-checkbox>
             </ion-item>
         </ion-list>
-        <button ion-button color="spotiwake" round="isRound">
+        <button ion-button round outline icon-left color="spotiwake" type="button" [navPush]="searchMusicPage">
+            <ion-icon name="musical-note"></ion-icon>
+            Select music
+        </button>
+        <br>
+        <button ion-button round icon-left color="spotiwake" >
             <ion-icon name="add"></ion-icon>
             Add
         </button>

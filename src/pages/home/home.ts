@@ -10,9 +10,37 @@ import { Storage } from '@ionic/storage';
 export class HomePage {
     addAlarmPage = AddAlarmPage;
     alarms = [];
+    storage:Storage;
 
     constructor(public navCtrl:NavController, storage: Storage) {
+        this.storage = storage;
 
+        this.storage.ready().then(() => {
+            //this.storage.clear();
+
+            this.storage.get('alarms').then((val) => {
+                if(this.isStorageDataValidAndNotEmpty(val)) {
+                    this.alarms = JSON.parse(val);
+                }else{
+
+                }
+            });
+            console.log(this.alarms);
+        });
+    }
+
+    //TODO généraliser cette fct pour pouvoir l'appeller ailleur
+    isStorageDataValidAndNotEmpty(data) {
+        if(data === null || data === undefined){
+            return false;
+        }
+
+        try {
+            JSON.parse(data);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 
 }
