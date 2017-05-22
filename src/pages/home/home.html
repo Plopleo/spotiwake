@@ -10,11 +10,11 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-card>
+        <ion-card *ngFor="let alarm of alarms">
             <ion-card-content>
                 <ion-item>
-                    <ion-label><h1>08:30</h1></ion-label>
-                    <ion-toggle color="spotiwake"></ion-toggle>
+                    <ion-label><h1>{{ alarm.time }}</h1></ion-label>
+                    <ion-toggle color="spotiwake" [checked]="alarm.isActive"></ion-toggle>
                 </ion-item>
             </ion-card-content>
         </ion-card>

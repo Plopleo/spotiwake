@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { AddAlarmPage } from '../add-alarm/add-alarm';
 import { Storage } from '@ionic/storage';
 
@@ -12,21 +12,27 @@ export class HomePage {
     alarms = [];
     storage:Storage;
 
-    constructor(public navCtrl:NavController, storage: Storage) {
+    constructor(public navCtrl:NavController, storage: Storage, public events:Events) {
         this.storage = storage;
 
         this.storage.ready().then(() => {
-            //this.storage.clear();
+            //this.storage.clear()
 
             this.storage.get('alarms').then((val) => {
-                if(this.isStorageDataValidAndNotEmpty(val)) {
+                if (this.isStorageDataValidAndNotEmpty(val)) {
                     this.alarms = JSON.parse(val);
-                }else{
-
                 }
             });
-            console.log(this.alarms);
         });
+
+        this.events.subscribe('alarm:added', (data) => {
+            this.storage.get('alarms').then((val) => {
+                if (this.isStorageDataValidAndNotEmpty(val)) {
+                    this.alarms = JSON.parse(val);
+                }
+            });
+        });
+
     }
 
     //TODO généraliser cette fct pour pouvoir l'appeller ailleur

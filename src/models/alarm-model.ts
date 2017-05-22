@@ -1,12 +1,22 @@
 export class AlarmModel {
 
-    constructor(public time: Date, public days: string[]){
+    constructor(public time: Date, public days: string[], public idSpotifyMusic = null, public isActive = true){
         this.time = time;
         this.days = days;
+        this.idSpotifyMusic = idSpotifyMusic;
+        this.isActive = isActive;
     }
 
     setTime(time){
         this.time = time;
+    }
+
+    setActive(isActive){
+        this.isActive = isActive;
+    }
+
+    setIdSpotifyMusic(idSpotifyMusic){
+        this.idSpotifyMusic = idSpotifyMusic;
     }
 
     addDay(day){

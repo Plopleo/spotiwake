@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AlarmModel } from '../../models/alarm-model';
 import { SearchMusicPage } from '../search-music/search-music';
+import { SpotifyService } from '../../services/spotify';
+
 
 
 
@@ -11,13 +13,15 @@ import { SearchMusicPage } from '../search-music/search-music';
 @Component({
     selector: 'page-add-alarm',
     templateUrl: 'add-alarm.html',
+    providers: [ SpotifyService ]
 })
 export class AddAlarmPage {
     searchMusicPage = SearchMusicPage;
     myForm:FormGroup;
     storage:Storage;
+    public selectedMusic;
 
-    constructor(public navCtrl:NavController, public navParams:NavParams, private builder:FormBuilder, storage:Storage) {
+    constructor(public navCtrl:NavController, public navParams:NavParams, private builder:FormBuilder, storage:Storage, private spotify:SpotifyService, public events:Events) {
         this.storage = storage;
 
         //this.storage.clear();
@@ -30,8 +34,18 @@ export class AddAlarmPage {
             'thursday': false,
             'friday': false,
             'saturday': false,
-            'sunday': false
-        })
+            'sunday': false,
+            'idSpotifyMusic': null
+        });
+
+        this.events.subscribe('music:selected', (idSpotifyMusic) => {
+            this.spotify.getSong(idSpotifyMusic).subscribe(
+                    data => {
+                        this.selectedMusic = data.json();
+                },
+                    err => console.error(err)
+            );
+        });
     }
 
     onSubmit(formData) {
@@ -64,10 +78,18 @@ export class AddAlarmPage {
                     days.push('sunday');
                 }
 
-                var alarm = new AlarmModel(formData.time, days);
+                var idSlectedMusic = null;
+                if (this.selectedMusic) {
+                    idSlectedMusic = this.selectedMusic.id;
+                }
+
+                var alarm = new AlarmModel(formData.time, days, idSlectedMusic);
 
                 val.push(alarm);
                 this.storage.set('alarms', JSON.stringify(val));
+
+                this.events.publish('alarm:added', null);
+                this.navCtrl.pop();
             });
         });
     }

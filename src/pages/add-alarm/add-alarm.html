@@ -41,12 +41,13 @@
                 <ion-checkbox formControlName="sunday" name="sunday" ></ion-checkbox>
             </ion-item>
         </ion-list>
+        <h5 ion-text color="spotiwake" *ngIf="selectedMusic">{{selectedMusic.artists[0].name}} - {{selectedMusic.name}}</h5>
         <button ion-button round outline icon-left color="spotiwake" type="button" [navPush]="searchMusicPage">
             <ion-icon name="musical-note"></ion-icon>
             Select music
         </button>
         <br>
-        <button ion-button round icon-left color="spotiwake" >
+        <button ion-button round icon-left color="spotiwake">
             <ion-icon name="add"></ion-icon>
             Add
         </button>
